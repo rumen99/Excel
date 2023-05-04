@@ -1,12 +1,13 @@
 # include "CommandLine.h"
-# include <iostream>
+
 
 
 commandLine::commandLine()
 {
     cmd.clear();
     loadedFile = false;
-    programTerminated = false;    
+    programTerminated = false;   
+    changes = false; 
 }
 
 void commandLine::run()
@@ -16,7 +17,9 @@ void commandLine::run()
         std::string command;
         std::cout << "> ";
 
+        cmd.clear();
         getline(std::cin,command);
+
         parse(command);
         execute();
     }
@@ -50,10 +53,16 @@ void commandLine::parse(std::string command)
             tmp += command[i];
         }
     }
+    if(tmp!="")cmd.push_back(tmp);
 }
 
 void commandLine::execute()
 {
+    if(cmd.size() == 0)
+    {
+        return ;
+    }
+
     std::string command = cmd[0];
     //command = tolower(command);
 
@@ -75,7 +84,7 @@ void commandLine::execute()
             return ;
         }
 
-        //open(cmd[1]); TODO
+        open();
         return ;
     }
 
@@ -92,7 +101,7 @@ void commandLine::execute()
             return ;
         }
 
-        //close(); TODO
+        close();
         return ;
     }
 
@@ -109,7 +118,7 @@ void commandLine::execute()
             return ;
         }
 
-        //save(); TODO
+        save();
         return ;
     }
 
@@ -131,7 +140,7 @@ void commandLine::execute()
             return ;
         }
 
-        //saveas(); TODO
+        saveas();
         return ;
     }
 
@@ -143,7 +152,7 @@ void commandLine::execute()
             return ;
         }
 
-        //help(); TODO
+        help();
         return ;
     }
 
@@ -155,7 +164,7 @@ void commandLine::execute()
             return ;
         }
 
-        //exit(); TODO
+        exit();
         return ;
     }
 
@@ -172,7 +181,7 @@ void commandLine::execute()
             return ;
         }
 
-        //print(); TODO
+        print();
         return ;
     }
 
@@ -189,7 +198,7 @@ void commandLine::execute()
             return ;
         }
 
-        //edit(); TODO
+        edit();
         return ;
     }
 
