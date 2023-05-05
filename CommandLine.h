@@ -3,6 +3,7 @@
 # include <string>
 # include <fstream>
 # include <iostream>
+# include "Table.h"
 class commandLine
 {
     private:
@@ -12,7 +13,7 @@ class commandLine
     bool loadedFile;
     bool changes;
     std::string path;
-    //Table* table;
+    table* TABLE;
 
     public:
 

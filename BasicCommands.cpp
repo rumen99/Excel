@@ -11,7 +11,16 @@ void commandLine::open()
         return ;
     }
 
-    // if(table->load(input_file)) TODO; Successfully opened file.xml
+     if(TABLE->load(input_file))
+     {
+        std::cout << "Successfully opened " + path << std::endl;
+        loadedFile = true;
+     }else
+     {
+        std::cout << "Error while reading the file... Terminating"<<std::endl;
+        programTerminated = true;
+     }
+        
 
     input_file.close();
 }
@@ -102,7 +111,7 @@ void commandLine::exit()
 
 void commandLine::print()
 {
-    // table->print(); TODO
+    TABLE->print();
 
     return ;
 }

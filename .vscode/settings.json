@@ -37,6 +37,12 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "files.associations": {
     "fstream": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "system_error": "cpp",
+    "array": "cpp",
+    "functional": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp"
   }
 }
