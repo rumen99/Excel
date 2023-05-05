@@ -16,6 +16,7 @@ double doubleNumber::get_value() const
         if(point && (value[i] >= '0' && value[i] <= '9' )) ans = ans + (value[i]-'0')*d;
         if(point) d = d/10;
     }
+    if(value[0] == '-')ans = -ans;
     return ans;
 }
 
