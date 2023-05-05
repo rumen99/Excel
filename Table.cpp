@@ -45,6 +45,8 @@ bool table::load(std::istream &is)
     cell* tmp;
     std::vector <cell*> row;
     std::string curr;
+    int roww = 0;
+    int col = 0;
     while((is.peek() != EOF))
     {
         curr  = "";
@@ -75,11 +77,12 @@ bool table::load(std::istream &is)
 
         else 
         {
-            std :: cout << "Error while reading the file!!\n";
+            std :: cout << "Error: row " << roww << ", col " << col << ", " << curr << " is unknown data type!!\n";
             return false;
         }
         
         row.push_back(tmp);
+        col++;
         if((is.peek() != EOF) && is.peek()==',')
         {
             is.get();
@@ -88,6 +91,8 @@ bool table::load(std::istream &is)
         {
             if((is.peek() != EOF)) is.get();
             t.push_back(row);
+            col = 0;
+            roww++;
             row.clear();
         }
     }
