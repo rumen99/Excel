@@ -75,7 +75,7 @@ void commandLine::saveas()
         return ;
     }
 
-    // table->save_to_file(output_file);
+    TABLE->save_to_file(output_file);
 
     output_file.close();
     changes = false;
