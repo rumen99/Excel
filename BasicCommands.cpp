@@ -3,6 +3,10 @@
 void commandLine::open()
 {
     path = cmd[1];
+    if(path[0] == '"')
+    {
+        path = path.substr(1,path.size()-2);
+    }
     std :: ifstream input_file(path);
 
     if(!input_file.is_open())
@@ -67,6 +71,10 @@ void commandLine::save()
 
 void commandLine::saveas()
 {
+    if(cmd[1][0] == '"')
+    {
+        cmd[1] = cmd[1].substr(1,cmd[1].size()-2);
+    }
     std :: ofstream output_file(cmd[1]);
 
     if(!output_file.is_open())
