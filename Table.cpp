@@ -4,12 +4,12 @@ std::string compressSpaces(std::string s)
 {
     std :: string ans = "";
     int i = 0;
-    while(i<s.size() && s[i]==' ')i++;
+    while( i < s.size() && ( s[i] == ' ' || s[i] == '\t') ) i++;
     int last = s.size()-1;
-    while(last >= 0 && s[last]==' ')last--;
-    while(i<=last)
+    while( last >= 0 && ( s[last] == ' ' || s[last] == '\t') ) last--;
+    while(i <= last)
     {
-        ans+=s[i];
+        ans += s[i];
         ++i;
     }
     return ans;
@@ -77,7 +77,7 @@ bool table::load(std::istream &is)
 
         else 
         {
-            std :: cout << "Error: row " << roww << ", col " << col << ", " << curr << " is unknown data type!!\n";
+            std :: cout << "Error: row " << roww + 1 << ", col " << col + 1 << ", " << curr << " is unknown data type!!\n";
             return false;
         }
         
