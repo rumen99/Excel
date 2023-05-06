@@ -49,3 +49,18 @@ void String::print(int sz) const
         std :: cout << " ";
 
 }
+
+void String::print_to_file(std::ostream &os) const
+{
+    os << '"';
+    for(int i = 0; i < value.size(); ++i)
+    {
+        if(value[i] == '"' || value[i] == '\\')
+        {
+            os << "\\"; 
+        }
+        os << value[i];
+    }
+    os << '"';
+    return ;
+}

@@ -14,3 +14,8 @@ void emptyCell::print(int sz) const
         std::cout << " ";
     return ;
 }
+
+void emptyCell::print_to_file(std::ostream &os) const
+{
+    return ;
+}

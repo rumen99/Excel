@@ -34,3 +34,9 @@ void doubleNumber::print(int sz) const
     std::cout << value ;
     return ;
 }
+
+void doubleNumber::print_to_file(std::ostream &os) const
+{
+    os << value;
+    return ;
+}

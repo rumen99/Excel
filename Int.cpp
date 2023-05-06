@@ -32,3 +32,9 @@ void integer::print(int sz) const
     std::cout << value;
     return ;
 }
+
+void integer::print_to_file(std::ostream &os) const
+{
+    os << value;
+    return ;
+}

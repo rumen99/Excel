@@ -48,7 +48,6 @@ void commandLine::close()
 
 void commandLine::save()
 {
-    if(!changes) return ;
     std :: ofstream output_file(path);
 
     if(!output_file.is_open())
@@ -57,7 +56,7 @@ void commandLine::save()
         return ;
     }
 
-    // table->save_to_file();
+    TABLE->save_to_file(output_file);
 
     output_file.close();
     changes = false;

@@ -18,6 +18,7 @@ class table
     bool load(std::istream &is);
     void calc_width();
     void print();
+    void save_to_file(std::ostream &os);
 
 };
 

@@ -138,3 +138,17 @@ void table::print()
         std::cout << '\n';
     }
 }
+
+void table::save_to_file(std::ostream &os)
+{
+    for(int i = 0; i < t.size(); ++i)
+    {
+        for(int j = 0; j < t[i].size(); ++j)
+        {
+            t[i][j] -> print_to_file(os);
+            if(j + 1 < t[i].size())
+                os << ", "; 
+        }
+        os << '\n';
+    }
+}
