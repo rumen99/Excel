@@ -1,5 +1,10 @@
 # include "Table.h"
 
+table::table()
+{
+    numberOfColumns = 0;
+}
+
 std::string compressSpaces(std::string s)
 {
     std :: string ans = "";
@@ -104,6 +109,7 @@ void table::calc_width()
 {
     for(int i = 0; i < t.size(); ++i)
     {
+        numberOfColumns = std::max(numberOfColumns, (size_t)t[i].size());
         for(int j = 0; j < t[i].size(); ++j)
         {
             if(column_width.size()==j)column_width.push_back(t[i][j]->get_size());
@@ -116,11 +122,17 @@ void table::calc_width()
 void table::print()
 {
     calc_width();
+    cell* empty = new emptyCell();
     for(int i = 0; i < t.size(); ++i)
     {
-        for(int j = 0; j < t[i].size(); j++)
+        for(int j = 0; j < t[i].size(); ++j)
         {
             t[i][j]->print(column_width[j]);
+            std::cout << " | ";
+        }
+        for(int j = t[i].size(); j < numberOfColumns; ++j)
+        {
+            empty->print(column_width[j]);
             std::cout << " | ";
         }
         std::cout << '\n';

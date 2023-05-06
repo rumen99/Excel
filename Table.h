@@ -12,8 +12,9 @@ class table
     private:
     std::vector < std::vector <cell*> > t;
     std::vector <int> column_width;
-
+    size_t numberOfColumns;
     public:
+    table();
     bool load(std::istream &is);
     void calc_width();
     void print();
