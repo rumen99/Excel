@@ -19,7 +19,7 @@ class table
     void calc_width();
     void print();
     void save_to_file(std::ostream &os);
-
+    void free();
 };
 
 std::string compressSpaces(std::string s);

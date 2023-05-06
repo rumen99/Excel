@@ -40,13 +40,13 @@ void commandLine::close()
         if(answer == 'y' || answer == 'Y') save();
     }
     
-    //table->free(); TODO
+    TABLE->free();
     changes = false;
     loadedFile = false;
-    path = "";
+    
+    std :: cout << "Successfully closed " + path + '\n';
 
-    std :: cout << "Successfully closed" + path + '\n';
-;
+    path = "";
     return ;
 }
 

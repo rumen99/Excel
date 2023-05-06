@@ -152,3 +152,17 @@ void table::save_to_file(std::ostream &os)
         os << '\n';
     }
 }
+
+void table::free()
+{
+    for(int i = 0; i < t.size(); ++i)
+    {
+        for(int j = 0; j < t[i].size(); ++j)
+        {
+            delete t[i][j];
+        }
+    }
+    t.clear();
+    column_width.clear();
+    numberOfColumns = 0;
+}
