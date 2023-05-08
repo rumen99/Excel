@@ -165,7 +165,7 @@ int formula::get_size() const
 
     std::optional res = get_value();
 
-    if(res.has_value()) std::to_string(res.value()).size();
+    if(res.has_value()) return ((std::to_string(res.value())).size());
     return 5;
 }
 
@@ -175,7 +175,7 @@ void formula::print(int sz) const
 
     if(res.has_value())
     {
-        std::cout << res.value();
+        std::cout << std::to_string(res.value());
         for(int i = get_size(); i < sz; ++i)
             std::cout << " ";
         return ;
