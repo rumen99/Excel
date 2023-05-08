@@ -1,6 +1,6 @@
 # include "EmptyCell.h"
 
-double emptyCell::get_value() const
+std::optional<double> emptyCell::get_value() const
 {
     return (double)0;
 }

@@ -8,7 +8,7 @@ integer::integer(std::string s)
     }
     value = answer;
 }
-double integer::get_value() const
+std::optional<double> integer::get_value() const
 {
     return (double)value;
 }

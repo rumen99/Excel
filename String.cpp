@@ -7,7 +7,7 @@ String::String(std::string s)
         if(s[i]!='\\' || s[i-1] == '\\') value+=s[i];
     }
 }
-double String::get_value() const
+std::optional<double> String::get_value() const
 {
     double answer = 0;
     double d = 1;

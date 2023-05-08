@@ -3,7 +3,7 @@ doubleNumber::doubleNumber(std::string s)
 {
     value = s;
 }
-double doubleNumber::get_value() const
+std::optional<double> doubleNumber::get_value() const
 {
     double ans = 0;
     bool point = 0;
