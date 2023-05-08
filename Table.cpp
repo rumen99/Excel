@@ -78,6 +78,9 @@ bool table::load(std::istream &is)
         else if(isDouble(curr))
         {
             tmp = new doubleNumber(curr);
+        }else if(curr[0] == '=')
+        {
+            tmp = new formula(curr);
         }
 
         else 
@@ -135,7 +138,7 @@ void table::print()
             empty->print(column_width[j]);
             std::cout << " | ";
         }
-        std::cout << '\n';
+        std::cout << std::endl;
     }
 }
 

@@ -3,6 +3,7 @@
 # include "Int.h"
 # include "Double.h"
 # include "EmptyCell.h"
+# include "Formula.h"
 # include <vector>
 # include <fstream>
 # include <iostream>

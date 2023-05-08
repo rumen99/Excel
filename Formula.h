@@ -11,6 +11,7 @@ class formula : public cell
     std::string equation;
     double value;
     public:
+    formula(std::string eq);
     std::optional<double> get_value() const;
     int get_size() const;
     void print(int sz) const;

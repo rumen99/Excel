@@ -1,5 +1,9 @@
 # include "Formula.h"
 
+formula::formula(std::string eq)
+{
+    equation = eq;
+}
 bool is_operator(char op)
 {
     return (op == '+' || op == '-' || op == '*' || op == '/' || op == '^');
@@ -15,21 +19,21 @@ int priority(char op)
 }
 double get_number(std::string equation, int &i)
 {
-            double tmp = 0;
-            double d = 1;
-            bool point = false;
-            for(;i < equation.size() && ( (equation[i] >= '0' && equation[i] <= '9') || equation[i] == '.'); ++i )
-            {
-                if(equation[i] == '.')
-                {
-                    point = true;
-                    d = 0.1;
-                    continue;
-                }
-                tmp = tmp*(point ? 1 : 10) + d*(equation[i] - '0');
-                if(point) d /= 10.0;
-            }
-         return tmp;   
+    double tmp = 0;
+    double d = 1;
+    bool point = false;
+    for(;(i < equation.size()) && ( (equation[i] >= '0' && equation[i] <= '9') || (equation[i] == '.') ); ++i )
+    {
+        if(equation[i] == '.')
+        {
+            point = true;
+            d = 0.1;
+            continue;
+        }
+        tmp = tmp*(point ? 1 : 10) + d*(equation[i] - '0');
+        if(point) d /= 10.0;
+    }
+    return tmp;   
 }
 
 std::optional<double> perform_operation(double lhs, char op, double rhs)
@@ -83,16 +87,18 @@ std::optional<double> formula::get_value() const
     bool point;
     int last_operation = 0;
     std::string result = "";
+    operations.push('(');
     for(int i = 1; i < equation.size(); ++i)
     {
         if(equation[i] == ' ') continue;
         if(equation[i] >= '0' && equation[i] <= '9')
         {
             tmp = get_number(equation,i);
+            i--;
             result += std::to_string(tmp);
             result += " ";
         }
-        if(equation[i] >= 'R')
+        else if(equation[i] >= 'R')
         {
             int x = 0, y = 0;
             for(++i; i < equation.size() && equation[i] != 'C'; ++i)
@@ -110,7 +116,7 @@ std::optional<double> formula::get_value() const
 
         }
 
-        if(is_operator(equation[i]))
+        else if(is_operator(equation[i]))
         {
             if(result.size() == last_operation)
             {
@@ -126,12 +132,12 @@ std::optional<double> formula::get_value() const
             operations.push(equation[i]);
         }
         
-        if (equation[i] == '(')
+        else if (equation[i] == '(')
         {
             operations.push(equation[i]);
         }
         
-        if (equation[i] == ')')
+        else if (equation[i] == ')')
         {
             while (operations.top() != '(')
             {
@@ -142,7 +148,12 @@ std::optional<double> formula::get_value() const
             operations.pop();
         }
     }
-
+    while(operations.top() != '(')
+    {
+        result += operations.top();
+        result += " ";
+        operations.pop();
+    }
     return RPN(result);
 
 
@@ -151,6 +162,7 @@ std::optional<double> formula::get_value() const
 
 int formula::get_size() const
 {
+
     std::optional res = get_value();
 
     if(res.has_value()) std::to_string(res.value()).size();
