@@ -13,7 +13,7 @@ class commandLine
     bool loadedFile;
     bool changes;
     std::string path;
-    table* TABLE;
+
 
     public:
 

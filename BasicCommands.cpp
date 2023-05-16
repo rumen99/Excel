@@ -15,7 +15,7 @@ void commandLine::open()
         return ;
     }
 
-     if(TABLE->load(input_file))
+     if(table::get_instance()->load(input_file))
      {
         std::cout << "Successfully opened " + path << std::endl;
         loadedFile = true;
@@ -40,7 +40,7 @@ void commandLine::close()
         if(answer == 'y' || answer == 'Y') save();
     }
     
-    TABLE->free();
+    table::get_instance()->free();
     changes = false;
     loadedFile = false;
     
@@ -60,7 +60,7 @@ void commandLine::save()
         return ;
     }
 
-    TABLE->save_to_file(output_file);
+    table::get_instance()->save_to_file(output_file);
 
     output_file.close();
     changes = false;
@@ -83,7 +83,7 @@ void commandLine::saveas()
         return ;
     }
 
-    TABLE->save_to_file(output_file);
+    table::get_instance()->save_to_file(output_file);
 
     output_file.close();
     changes = false;
@@ -110,7 +110,7 @@ void commandLine::exit()
 {
     programTerminated = true;
 
-    //table->free(); TODO
+    table::get_instance()->free();
 
     std :: cout << "Exiting program...\n";
     return ;
@@ -118,7 +118,7 @@ void commandLine::exit()
 
 void commandLine::print()
 {
-    TABLE->print();
+    table::get_instance()->print();
 
     return ;
 }
@@ -128,7 +128,7 @@ void commandLine::edit()
     //int x = get_num(cmd[1]);
     //int y = get_num(cmd[2]);
 
-    // if(table->edit(x,y,cmd[3])); TODO; Successfully or not;
+    // if(table::get_instance()->edit(x,y,cmd[3])); TODO; Successfully or not;
 
     return ;
 }

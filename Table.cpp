@@ -1,5 +1,13 @@
 # include "Table.h"
 
+table* table::instance = nullptr;
+
+table* table::get_instance()
+{
+    if(instance == nullptr) instance = new table();
+    return instance;
+}
+
 table::table()
 {
     numberOfColumns = 0;
@@ -168,4 +176,5 @@ void table::free()
     t.clear();
     column_width.clear();
     numberOfColumns = 0;
+    instance = nullptr;
 }

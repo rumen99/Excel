@@ -8,7 +8,6 @@ commandLine::commandLine()
     loadedFile = false;
     programTerminated = false;   
     changes = false; 
-    TABLE = new table;
 }
 
 void commandLine::run()

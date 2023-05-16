@@ -11,6 +11,7 @@
 class table
 {
     private:
+    static table* instance;
     std::vector < std::vector <cell*> > t;
     std::vector <int> column_width;
     size_t numberOfColumns;
@@ -21,6 +22,7 @@ class table
     void print();
     void save_to_file(std::ostream &os);
     void free();
+    static table* get_instance();
 };
 
 std::string compressSpaces(std::string s);
