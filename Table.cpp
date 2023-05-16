@@ -53,6 +53,60 @@ bool isDouble(std::string s)
 
     return point;
 }
+
+bool isFormula(std::string s)
+{
+    bool lastoperator = false;
+    for(int i = 1; i < s.size(); ++i)
+    {
+        if(s[i] == ' ') continue;
+        if(s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '^')
+        {
+            if(lastoperator) return false;
+            lastoperator = true;
+            continue;
+        }
+        if(s[i] == 'R')
+        {
+            if(i > 3 && (!lastoperator)) return false;
+            lastoperator = false;
+            bool fl = true;
+            i++;
+            while(i < s.size() && s[i] != 'C')
+            {
+                if(s[i] < '0' || s[i] > '9') return false;
+                i++;
+            }
+            if(i == s.size()) return false;
+            i++;
+            while(i < s.size() && s[i] >= '0' && s[i] <= '9')i++;
+            i--;
+            continue;
+        }
+        if(s[i] >= '0' && s[i] <= '9')
+        {
+            if(i > 3 && (!lastoperator)) return false;
+            lastoperator = false;
+            bool point = false;
+            while(i < s.size())
+            {
+                if(s[i] >= '0' && s[i] <= '9') {i++;continue;}
+                if(s[i] == '.')
+                {
+                    if(point) return false;
+                    point = true;
+                    i++;
+                    continue;
+                }
+                break;
+            }
+            i--;
+            continue;
+        }
+
+    }
+    return true;
+}
 bool table::load(std::istream &is)
 {
     cell* tmp;
@@ -88,6 +142,11 @@ bool table::load(std::istream &is)
             tmp = new doubleNumber(curr);
         }else if(curr[0] == '=')
         {
+            if(!isFormula(curr))
+            {
+                std :: cout << "Error: row " << roww + 1 << ", col " << col + 1 << ", " << curr << " is invalid formula!!\n";
+                return false;
+            }
             tmp = new formula(curr);
         }
 

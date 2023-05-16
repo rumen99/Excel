@@ -30,3 +30,4 @@ class table
 std::string compressSpaces(std::string s);
 bool isInt(std::string s);
 bool isDouble(std::string s);
+bool isFormula(std::string s);
