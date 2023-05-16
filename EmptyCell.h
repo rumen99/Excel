@@ -1,4 +1,5 @@
-# pragma once
+#ifndef __EMPTYCELL_HPP
+#define __EMPTYCELL_HPP
 # include "Cell.h"
 # include <string>
 # include <iostream>
@@ -13,3 +14,5 @@ class emptyCell : public cell
     void print_to_file(std::ostream &os);
     void reset_for_caluclation();
 };
+
+#endif

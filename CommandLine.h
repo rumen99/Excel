@@ -1,3 +1,4 @@
+
 # include <vector>
 # include <cstring>
 # include <string>
@@ -13,7 +14,6 @@ class commandLine
     bool loadedFile;
     bool changes;
     std::string path;
-
 
     public:
 

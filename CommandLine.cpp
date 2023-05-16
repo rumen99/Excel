@@ -1,7 +1,5 @@
 # include "CommandLine.h"
 
-
-
 commandLine::commandLine()
 {
     cmd.clear();
@@ -31,6 +29,7 @@ void commandLine::parse(std::string command)
 {
     std::string tmp = "";
     bool quotes = false;
+
     for(int i = 0; i < command.size(); ++i)
     {
         if(command[i] == ' ' && !quotes)
@@ -38,6 +37,7 @@ void commandLine::parse(std::string command)
             if(tmp != "")
                 cmd.push_back(tmp);
             tmp = "";
+
             if(cmd.size() == 2)
             {
                 i++;
@@ -49,22 +49,26 @@ void commandLine::parse(std::string command)
                 cmd.push_back(tmp);
                 return ;
             }
+
         }
         else if(command[i] == '\"' && (i == 0 || command[i-1] != '\\'))
         {
-            if(!quotes) quotes = true;
+            if(!quotes)
+                quotes = true;
             else
                 {
                     quotes = false;
                     cmd.push_back(tmp);
                     tmp = "";
                 }
-        }else
+        }
+        else
         {
             tmp += command[i];
         }
     }
-    if(tmp!="")cmd.push_back(tmp);
+    if(tmp!="")
+        cmd.push_back(tmp);
 }
 
 void commandLine::execute()
@@ -75,7 +79,6 @@ void commandLine::execute()
     }
 
     std::string command = cmd[0];
-    //command = tolower(command);
 
     if(command == "open")
     {
@@ -186,6 +189,7 @@ void commandLine::execute()
             std :: cout << "Expected few arguments!\n";
             return ;
         }
+        
         if(!loadedFile)
         {
             std :: cout << "There is no open file!\n";

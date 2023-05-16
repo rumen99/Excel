@@ -1,4 +1,6 @@
-# pragma once
+#ifndef __CELL_HPP
+#define __CELL_HPP
+
 # include <fstream>
 # include <iostream>
 # include <optional>
@@ -12,3 +14,5 @@ class cell
     virtual void reset_for_caluclation() = 0;
     virtual void print_to_file(std::ostream &os) = 0;
 };
+
+#endif

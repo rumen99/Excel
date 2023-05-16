@@ -1,4 +1,5 @@
-# pragma once
+#ifndef __TABLE_HPP
+#define __TABLE_HPP
 # include "Cell.h"
 # include "String.h"
 # include "Int.h"
@@ -12,12 +13,16 @@
 class table
 {
     private:
+
     static table* instance;
     std::vector < std::vector <cell*> > t;
     std::vector <int> column_width;
     size_t numberOfColumns;
+
     public:
+    
     table();
+    ~table();
     bool load(std::istream &is);
     void calc_width();
     void print();
@@ -28,7 +33,6 @@ class table
     std::optional<double> get_cell_value(int x, int y) const;
 };
 
-std::string compressSpaces(std::string s);
-bool isInt(std::string s);
-bool isDouble(std::string s);
-bool isFormula(std::string s);
+
+
+#endif

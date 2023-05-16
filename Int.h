@@ -1,7 +1,9 @@
-# pragma once
+#ifndef __INT_HPP
+#define __INT_HPP
 # include "Cell.h"
 # include <iostream>
 # include <optional>
+
 class integer : public cell
 {
     private:
@@ -13,5 +15,7 @@ class integer : public cell
     void print(int sz);
     void print_to_file(std::ostream &os);
     void reset_for_caluclation();
-    
+
 };
+
+#endif

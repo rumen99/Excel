@@ -1,4 +1,6 @@
-# pragma once
+#ifndef __FORMULA_HPP
+#define __FORMULA_HPP
+
 # include "Cell.h"
 # include <string>
 # include <iostream>
@@ -7,7 +9,7 @@
 # include <optional>
 # include <cmath>
 # include "table.h"
-
+# include "AdditionalFunctions.h"
 class formula : public cell
 {
     private:
@@ -24,7 +26,6 @@ class formula : public cell
     void reset_for_caluclation();
 };
 
-bool is_operator(char op);
-int priority(char op);
-std::optional<double> RPN(std::string expression);
-std::string compress(std::string);
+
+
+#endif

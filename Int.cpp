@@ -1,4 +1,5 @@
 # include "Int.h"
+
 integer::integer(std::string s)
 {
     int answer = 0;
@@ -8,10 +9,12 @@ integer::integer(std::string s)
     }
     value = answer;
 }
+
 std::optional<double> integer::get_value()
 {
     return (double)value;
 }
+
 int integer::get_size()
 {
     int sz = 0;
@@ -21,9 +24,10 @@ int integer::get_size()
         sz++;
         tmp/=10;
     }
-    if(value < 0) sz++;
+    if(value <= 0) sz++;
     return sz;
 }
+
 void integer::print(int sz)
 {
     int k = get_size();

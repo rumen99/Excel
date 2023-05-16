@@ -13,100 +13,7 @@ table::table()
     numberOfColumns = 0;
 }
 
-std::string compressSpaces(std::string s)
-{
-    std :: string ans = "";
-    int i = 0;
-    while( i < s.size() && ( s[i] == ' ' || s[i] == '\t') ) i++;
-    int last = s.size()-1;
-    while( last >= 0 && ( s[last] == ' ' || s[last] == '\t') ) last--;
-    while(i <= last)
-    {
-        ans += s[i];
-        ++i;
-    }
-    return ans;
-}
 
-bool isInt(std::string s)
-{
-    for(int i = 0; i < s.size(); ++i)
-    {
-        if(s[i] >= '0' && s[i] <= '9')continue;
-        if(i == 0 && (s[i]=='+' || s[i] == '-')) continue;
-        return false;
-    }
-
-    return true;
-}
-
-bool isDouble(std::string s)
-{
-    bool point = false;
-    for(int i = 0; i < s.size(); ++i)
-    {
-        if(s[i] >= '0' && s[i] <= '9')continue;
-        if(i == 0 && (s[i]=='+' || s[i] == '-')) continue;
-        if(i!=0 && (!point) && s[i]=='.'){point = true; continue;}
-        return false;
-    }
-
-    return point;
-}
-
-bool isFormula(std::string s)
-{
-    bool lastoperator = false;
-    for(int i = 1; i < s.size(); ++i)
-    {
-        if(s[i] == ' ') continue;
-        if(s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '^')
-        {
-            if(lastoperator) return false;
-            lastoperator = true;
-            continue;
-        }
-        if(s[i] == 'R')
-        {
-            if(i > 3 && (!lastoperator)) return false;
-            lastoperator = false;
-            bool fl = true;
-            i++;
-            while(i < s.size() && s[i] != 'C')
-            {
-                if(s[i] < '0' || s[i] > '9') return false;
-                i++;
-            }
-            if(i == s.size()) return false;
-            i++;
-            while(i < s.size() && s[i] >= '0' && s[i] <= '9')i++;
-            i--;
-            continue;
-        }
-        if(s[i] >= '0' && s[i] <= '9')
-        {
-            if(i > 3 && (!lastoperator)) return false;
-            lastoperator = false;
-            bool point = false;
-            while(i < s.size())
-            {
-                if(s[i] >= '0' && s[i] <= '9') {i++;continue;}
-                if(s[i] == '.')
-                {
-                    if(point) return false;
-                    point = true;
-                    i++;
-                    continue;
-                }
-                break;
-            }
-            i--;
-            continue;
-        }
-
-    }
-    return true;
-}
 bool table::load(std::istream &is)
 {
     cell* tmp;
@@ -114,6 +21,7 @@ bool table::load(std::istream &is)
     std::string curr;
     int roww = 0;
     int col = 0;
+
     while((is.peek() != EOF))
     {
         curr  = "";
@@ -122,6 +30,7 @@ bool table::load(std::istream &is)
             curr += is.get();
         }
         curr = compressSpaces(curr);
+
         if(curr.size() == 0)
         {
             tmp = new emptyCell();
@@ -140,7 +49,9 @@ bool table::load(std::istream &is)
         else if(isDouble(curr))
         {
             tmp = new doubleNumber(curr);
-        }else if(curr[0] == '=')
+        }
+        
+        else if(curr[0] == '=')
         {
             if(!isFormula(curr))
             {
@@ -158,11 +69,13 @@ bool table::load(std::istream &is)
         
         row.push_back(tmp);
         col++;
+
         if((is.peek() != EOF) && is.peek()==',')
         {
             is.get();
             continue;
-        }else
+        }
+        else
         {
             if((is.peek() != EOF)) is.get();
             t.push_back(row);
@@ -184,10 +97,13 @@ void table::calc_width()
             t[i][j] -> reset_for_caluclation();
         }
     }
+
     column_width.clear();
+
     for(int i = 0; i < t.size(); ++i)
     {
         numberOfColumns = std::max(numberOfColumns, (size_t)t[i].size());
+
         for(int j = 0; j < t[i].size(); ++j)
         {
             if(column_width.size()==j)column_width.push_back(t[i][j]->get_size());
@@ -201,6 +117,7 @@ void table::print()
 {
     calc_width();
     cell* empty = new emptyCell();
+
     for(int i = 0; i < t.size(); ++i)
     {
         for(int j = 0; j < t[i].size(); ++j)
@@ -231,7 +148,7 @@ void table::save_to_file(std::ostream &os)
     }
 }
 
-void table::free()
+table::~table()
 {
     for(int i = 0; i < t.size(); ++i)
     {
@@ -241,6 +158,10 @@ void table::free()
         }
     }
     t.clear();
+}
+
+void table::free()
+{
     column_width.clear();
     numberOfColumns = 0;
     instance = nullptr;
@@ -302,6 +223,7 @@ bool table::edit(int x, int y, std::string curr)
         while(t.size() <= x)
             t.push_back(row);
     }
+
     if(y >= t[x].size())
     {
         
@@ -313,10 +235,7 @@ bool table::edit(int x, int y, std::string curr)
             
     }
     
-    
-
     delete t[x][y];
-    
     t[x][y] = tmp;
 
     calc_width();

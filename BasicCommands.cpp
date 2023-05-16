@@ -19,7 +19,8 @@ void commandLine::open()
      {
         std::cout << "Successfully opened " + path << std::endl;
         loadedFile = true;
-     }else
+     }
+     else
      {
         std::cout << "Error while reading the file... Terminating"<<std::endl;
         programTerminated = true;
@@ -41,6 +42,7 @@ void commandLine::close()
     }
     
     table::get_instance()->free();
+
     changes = false;
     loadedFile = false;
     
@@ -132,6 +134,7 @@ void commandLine::edit()
         std :: cout << "Invalid <R><C> format. See help for mor information\n";
         return ;
     }
+
     for(i = 1; i < cmd[1].size() && cmd[1][i] != 'C'; ++i)
     {
         if(cmd[1][i] < '0' || cmd[1][i] > '9')
@@ -141,11 +144,13 @@ void commandLine::edit()
         }
         x = x*10 + (cmd[1][i] - '0');
     }
+
     if(i == cmd[1].size())
     {
         std :: cout << "Invalid <R><C> format. See help for mor information\n";
         return ;
     }
+
     for(++i; (i < cmd[1].size()) && (cmd[1][i] >= '0' && cmd[1][i] <= '9'); ++i)
     {
         if(cmd[1][i] < '0' || cmd[1][i] > '9')
@@ -162,7 +167,8 @@ void commandLine::edit()
         std :: cout << "SUccessfully edit the cell.\n";
         changes = true;
         return ;
-    }else
+    }
+    else
     {
         std :: cout << "Invalid cell value!\n";
         return ;

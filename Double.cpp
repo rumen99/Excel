@@ -1,12 +1,20 @@
 # include "Double.h"
+
 doubleNumber::doubleNumber(std::string s)
 {
     value = s;
 }
+
+doubleNumber::~doubleNumber()
+{
+
+}
+
 void doubleNumber::reset_for_caluclation()
 {
 
 }
+
 std::optional<double> doubleNumber::get_value()
 {
     double ans = 0;
@@ -35,6 +43,7 @@ void doubleNumber::print(int sz)
     {
         std::cout << " ";
     }
+    
     std::cout << value ;
     return ;
 }
