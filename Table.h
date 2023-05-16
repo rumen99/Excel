@@ -22,6 +22,7 @@ class table
     void calc_width();
     void print();
     void save_to_file(std::ostream &os);
+    bool edit(int x, int y, std::string curr);
     void free();
     static table* get_instance();
     std::optional<double> get_cell_value(int x, int y) const;

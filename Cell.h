@@ -9,5 +9,6 @@ class cell
     virtual std::optional<double> get_value() = 0;
     virtual int get_size()= 0;
     virtual void print(int sz) = 0;
+    virtual void reset_for_caluclation() = 0;
     virtual void print_to_file(std::ostream &os) = 0;
 };

@@ -38,3 +38,8 @@ void integer::print_to_file(std::ostream &os)
     os << value;
     return ;
 }
+
+void integer::reset_for_caluclation()
+{
+    return ;
+}

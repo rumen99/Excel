@@ -3,6 +3,10 @@ doubleNumber::doubleNumber(std::string s)
 {
     value = s;
 }
+void doubleNumber::reset_for_caluclation()
+{
+
+}
 std::optional<double> doubleNumber::get_value()
 {
     double ans = 0;

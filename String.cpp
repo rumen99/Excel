@@ -50,6 +50,11 @@ void String::print(int sz)
 
 }
 
+void String::reset_for_caluclation()
+{
+    return ;
+}
+
 void String::print_to_file(std::ostream &os)
 {
     os << '"';

@@ -179,6 +179,14 @@ void table::calc_width()
 {
     for(int i = 0; i < t.size(); ++i)
     {
+        for(int j = 0; j < t[i].size(); ++j)
+        {
+            t[i][j] -> reset_for_caluclation();
+        }
+    }
+    column_width.clear();
+    for(int i = 0; i < t.size(); ++i)
+    {
         numberOfColumns = std::max(numberOfColumns, (size_t)t[i].size());
         for(int j = 0; j < t[i].size(); ++j)
         {
@@ -245,4 +253,72 @@ std::optional<double> table::get_cell_value(int x, int y) const
     if(x>=t.size()) return 0;
     if(y>=t[x].size()) return 0;
     return t[x][y]->get_value();
+}
+
+bool table::edit(int x, int y, std::string curr)
+{
+    x--;
+    y--;
+    cell *tmp;
+    
+    curr = compressSpaces(curr);
+    if(curr.size() == 0)
+    {
+        tmp = new emptyCell();
+    }
+    
+    else if(curr[0] == '\"')
+    {
+        tmp = new String(curr);
+    }
+
+    else if(isInt(curr))
+    {
+        tmp = new integer(curr);
+    }
+
+    else if(isDouble(curr))
+    {
+        tmp = new doubleNumber(curr);
+    }
+    else if(curr[0] == '=')
+    {
+        if(!isFormula(curr))
+        {
+            return false;
+        }
+        tmp = new formula(curr);
+    }
+
+    else 
+    {
+        return false;
+    }
+
+
+    if(x >= t.size())
+    {
+        std::vector <cell*> row;
+        while(t.size() <= x)
+            t.push_back(row);
+    }
+    if(y >= t[x].size())
+    {
+        
+        while(t[x].size() <= y)
+        {
+            cell* emptycell = new emptyCell();
+            t[x].push_back(emptycell);
+        }
+            
+    }
+    
+    
+
+    delete t[x][y];
+    
+    t[x][y] = tmp;
+
+    calc_width();
+    return true;
 }

@@ -7,6 +7,11 @@ formula::formula(std::string eq)
     isNowCalculating = false;
 }
 
+void formula::reset_for_caluclation()
+{
+    isCalculated = false;
+    isNowCalculating = false;
+}
 std::string compress(std::string S)
 {
     bool fl = false;

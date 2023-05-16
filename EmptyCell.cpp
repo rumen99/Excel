@@ -19,3 +19,8 @@ void emptyCell::print_to_file(std::ostream &os)
 {
     return ;
 }
+
+void emptyCell::reset_for_caluclation()
+{
+    return ;
+}

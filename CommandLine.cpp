@@ -38,6 +38,17 @@ void commandLine::parse(std::string command)
             if(tmp != "")
                 cmd.push_back(tmp);
             tmp = "";
+            if(cmd.size() == 2)
+            {
+                i++;
+                while(i < command.size())
+                {
+                    tmp += command[i];
+                    i++;
+                }
+                cmd.push_back(tmp);
+                return ;
+            }
         }
         else if(command[i] == '\"' && (i == 0 || command[i-1] != '\\'))
         {
@@ -187,11 +198,18 @@ void commandLine::execute()
 
     if(command == "edit")
     {
-        if(cmd.size() < 4)
+        if(cmd.size() < 3)
         {
             std :: cout << "Expected more arguments!\n";
             return ;
         }
+
+        if(cmd.size() > 3)
+        {
+            std :: cout << "Expected few arguments!\n";
+            return ;
+        }
+
         if(!loadedFile)
         {
             std :: cout << "There is no open file!\n";

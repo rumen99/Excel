@@ -102,7 +102,7 @@ void commandLine::help()
     std::cout << "\thelp                           prints this information" << std::endl;
     std::cout << "\texit                           exists the program" << std::endl;
     std::cout << "\tprint                          prints the table to the screen" << std::endl;
-    std::cout << "\tedit  <R> <C> <value>          changes the value at row <R> and column <C> to <value>" << std::endl;
+    std::cout << "\tedit  R<R>C<C> <value>          changes the value at row <R> and column <C> to <value>" << std::endl;
     return;
 }
 
@@ -125,10 +125,48 @@ void commandLine::print()
 
 void commandLine::edit()
 {
-    //int x = get_num(cmd[1]);
-    //int y = get_num(cmd[2]);
+    int x = 0, y = 0;
+    int i;
+    if(cmd[1][0]!='R')
+    {
+        std :: cout << "Invalid <R><C> format. See help for mor information\n";
+        return ;
+    }
+    for(i = 1; i < cmd[1].size() && cmd[1][i] != 'C'; ++i)
+    {
+        if(cmd[1][i] < '0' || cmd[1][i] > '9')
+        {
+            std :: cout << "Invalid <R><C> format. See help for mor information\n";
+            return ;
+        }
+        x = x*10 + (cmd[1][i] - '0');
+    }
+    if(i == cmd[1].size())
+    {
+        std :: cout << "Invalid <R><C> format. See help for mor information\n";
+        return ;
+    }
+    for(++i; (i < cmd[1].size()) && (cmd[1][i] >= '0' && cmd[1][i] <= '9'); ++i)
+    {
+        if(cmd[1][i] < '0' || cmd[1][i] > '9')
+        {
+            std :: cout << "Invalid <R><C> format. See help for mor information\n";
+            return ;
+        }
+        y = y*10 + (cmd[1][i] - '0');
+    }
 
-    // if(table::get_instance()->edit(x,y,cmd[3])); TODO; Successfully or not;
+ 
+    if(table::get_instance()->edit(x,y,cmd[2]))
+    {
+        std :: cout << "SUccessfully edit the cell.\n";
+        changes = true;
+        return ;
+    }else
+    {
+        std :: cout << "Invalid cell value!\n";
+        return ;
+    }
 
     return ;
 }
