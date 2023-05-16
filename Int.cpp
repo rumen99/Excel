@@ -8,11 +8,11 @@ integer::integer(std::string s)
     }
     value = answer;
 }
-std::optional<double> integer::get_value() const
+std::optional<double> integer::get_value()
 {
     return (double)value;
 }
-int integer::get_size() const
+int integer::get_size()
 {
     int sz = 0;
     int tmp = value;
@@ -24,7 +24,7 @@ int integer::get_size() const
     if(value < 0) sz++;
     return sz;
 }
-void integer::print(int sz) const
+void integer::print(int sz)
 {
     int k = get_size();
     for(int i = 1; i <= sz-k; ++i)
@@ -33,7 +33,7 @@ void integer::print(int sz) const
     return ;
 }
 
-void integer::print_to_file(std::ostream &os) const
+void integer::print_to_file(std::ostream &os)
 {
     os << value;
     return ;

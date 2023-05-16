@@ -3,6 +3,24 @@
 formula::formula(std::string eq)
 {
     equation = eq;
+    isCalculated = false;
+    isNowCalculating = false;
+}
+
+std::string compress(std::string S)
+{
+    bool fl = false;
+    for(int i = 0; i < S.size(); ++i)
+    {
+        if(S[i]=='.')fl = true;
+    }
+    if(!fl)return S;
+    while(S[S.size()-1]=='0')
+    {
+        S.pop_back();
+    }
+    if(S[S.size()-1]=='.')S.pop_back();
+    return S;
 }
 bool is_operator(char op)
 {
@@ -19,6 +37,7 @@ int priority(char op)
 }
 double get_number(std::string equation, int &i)
 {
+
     double tmp = 0;
     double d = 1;
     bool point = false;
@@ -44,7 +63,10 @@ std::optional<double> perform_operation(double lhs, char op, double rhs)
     if(op == '^') return pow(lhs,rhs);
     if(op == '/')
     {
-        if(rhs != 0) return lhs/rhs;
+        if(rhs != 0.0)
+        {
+            return lhs/rhs;
+        }
         return std::nullopt;
     }
 
@@ -71,7 +93,7 @@ std::optional<double> RPN(std::string expression)
             lhs = numbers.top();
             numbers.pop();
             result = perform_operation(lhs, expression[idx++], rhs);
-            if (result.has_value() == false)return std::nullopt;
+            if (result == std::nullopt)return std::nullopt;
             else numbers.push(result.value());
         }
         idx++;
@@ -79,8 +101,17 @@ std::optional<double> RPN(std::string expression)
     result = numbers.top();
     return result;
 }
-std::optional<double> formula::get_value() const
+std::optional<double> formula::get_value()
 {
+    if(isCalculated)
+    {
+        return value;
+    }
+    if(isNowCalculating)
+    {
+        return std::nullopt;
+    }
+    isNowCalculating = true;
     std::vector < double > vals;
     std::stack <char> operations;
     double tmp,d;
@@ -98,7 +129,7 @@ std::optional<double> formula::get_value() const
             result += std::to_string(tmp);
             result += " ";
         }
-        else if(equation[i] >= 'R')
+        else if(equation[i] == 'R')
         {
             int x = 0, y = 0;
             for(++i; i < equation.size() && equation[i] != 'C'; ++i)
@@ -106,13 +137,22 @@ std::optional<double> formula::get_value() const
                 x = x*10 + (equation[i] - '0');
             }
 
-            for(++i; i < equation.size() && (equation[i] >= '0' && equation[i] <= '9'); ++i)
+            for(++i; (i < equation.size()) && (equation[i] >= '0' && equation[i] <= '9'); ++i)
             {
                 y = y*10 + (equation[i] - '0');
             }
-
-            // TODO
-            result += "1 ";
+            std::optional<double> val = table::get_instance()->get_cell_value(x,y);
+            i--;
+            if(val == std::nullopt)
+            {
+                value = std::nullopt;
+                isCalculated = true;
+                isNowCalculating = false;
+                return std::nullopt;
+            }
+            
+            result += std::to_string(val.value());
+            result += " ";
 
         }
 
@@ -154,39 +194,40 @@ std::optional<double> formula::get_value() const
         result += " ";
         operations.pop();
     }
-    return RPN(result);
-
-
-
+    value = RPN(result);
+    isCalculated = true;
+    isNowCalculating = false;
+    return value;
 }
 
-int formula::get_size() const
+int formula::get_size()
 {
 
     std::optional res = get_value();
 
-    if(res.has_value()) return ((std::to_string(res.value())).size());
+    if(res != std::nullopt) return (compress(std::to_string(res.value())).size());
     return 5;
 }
 
-void formula::print(int sz) const
+void formula::print(int sz)
 {
     std::optional res = get_value();
-
-    if(res.has_value())
+    if(res != std::nullopt)
     {
-        std::cout << std::to_string(res.value());
+        std::cout << compress(std::to_string(res.value()));
         for(int i = get_size(); i < sz; ++i)
             std::cout << " ";
         return ;
     }else
     {
         std::cout << "ERROR";
+        for(int i = 5; i < sz; i++)
+            std :: cout << " ";
         return ;
     }
 }
 
-void formula::print_to_file(std::ostream &os) const
+void formula::print_to_file(std::ostream &os)
 {
     os << equation;
     return ;

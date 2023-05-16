@@ -7,7 +7,7 @@ String::String(std::string s)
         if(s[i]!='\\' || s[i-1] == '\\') value+=s[i];
     }
 }
-std::optional<double> String::get_value() const
+std::optional<double> String::get_value()
 {
     double answer = 0;
     double d = 1;
@@ -37,12 +37,12 @@ std::optional<double> String::get_value() const
     return answer;
 }
 
-int String::get_size() const
+int String::get_size()
 {
     return value.size();
 }
 
-void String::print(int sz) const
+void String::print(int sz)
 {
     std :: cout << value;
     for(int i = 0; i < sz-get_size();++i)
@@ -50,7 +50,7 @@ void String::print(int sz) const
 
 }
 
-void String::print_to_file(std::ostream &os) const
+void String::print_to_file(std::ostream &os)
 {
     os << '"';
     for(int i = 0; i < value.size(); ++i)

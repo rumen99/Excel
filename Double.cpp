@@ -3,7 +3,7 @@ doubleNumber::doubleNumber(std::string s)
 {
     value = s;
 }
-std::optional<double> doubleNumber::get_value() const
+std::optional<double> doubleNumber::get_value()
 {
     double ans = 0;
     bool point = 0;
@@ -20,12 +20,12 @@ std::optional<double> doubleNumber::get_value() const
     return ans;
 }
 
-int doubleNumber::get_size() const
+int doubleNumber::get_size()
 {
     return value.size();
 }
 
-void doubleNumber::print(int sz) const
+void doubleNumber::print(int sz)
 {
     for(int i = 1; i <= sz-value.size(); i++)
     {
@@ -35,7 +35,7 @@ void doubleNumber::print(int sz) const
     return ;
 }
 
-void doubleNumber::print_to_file(std::ostream &os) const
+void doubleNumber::print_to_file(std::ostream &os)
 {
     os << value;
     return ;

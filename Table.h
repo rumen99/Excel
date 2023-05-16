@@ -1,3 +1,4 @@
+# pragma once
 # include "Cell.h"
 # include "String.h"
 # include "Int.h"
@@ -23,6 +24,7 @@ class table
     void save_to_file(std::ostream &os);
     void free();
     static table* get_instance();
+    std::optional<double> get_cell_value(int x, int y) const;
 };
 
 std::string compressSpaces(std::string s);

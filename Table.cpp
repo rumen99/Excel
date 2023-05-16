@@ -178,3 +178,12 @@ void table::free()
     numberOfColumns = 0;
     instance = nullptr;
 }
+
+std::optional<double> table::get_cell_value(int x, int y) const
+{
+    x--;
+    y--;
+    if(x>=t.size()) return 0;
+    if(y>=t[x].size()) return 0;
+    return t[x][y]->get_value();
+}

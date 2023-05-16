@@ -1,3 +1,4 @@
+# pragma once
 # include "Cell.h"
 # include <string>
 # include <iostream>
@@ -6,8 +7,8 @@ class emptyCell : public cell
 {
     private:
     public:
-    std::optional<double> get_value() const;
-    int get_size() const;
-    void print(int sz) const;
-    void print_to_file(std::ostream &os) const;
+    std::optional<double> get_value();
+    int get_size();
+    void print(int sz);
+    void print_to_file(std::ostream &os);
 };

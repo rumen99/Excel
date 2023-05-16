@@ -1,3 +1,4 @@
+# pragma once
 # include "Cell.h"
 # include <string>
 # include <iostream>
@@ -5,19 +6,24 @@
 # include <stack>
 # include <optional>
 # include <cmath>
+# include "table.h"
+
 class formula : public cell
 {
     private:
     std::string equation;
-    double value;
+    std::optional<double> value;
+    bool isCalculated;
+    bool isNowCalculating;
     public:
     formula(std::string eq);
-    std::optional<double> get_value() const;
-    int get_size() const;
-    void print(int sz) const;
-    void print_to_file(std::ostream &os) const;
+    std::optional<double> get_value();
+    int get_size();
+    void print(int sz);
+    void print_to_file(std::ostream &os);
 };
 
 bool is_operator(char op);
 int priority(char op);
 std::optional<double> RPN(std::string expression);
+std::string compress(std::string);
