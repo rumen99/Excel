@@ -1,5 +1,5 @@
-#ifndef __TABLE_HPP
-#define __TABLE_HPP
+#ifndef __Table_HPP
+#define __Table_HPP
 # include "Cell.h"
 # include "String.h"
 # include "Int.h"
@@ -10,27 +10,27 @@
 # include <fstream>
 # include <iostream>
 # include <string>
-class table
+class Table
 {
     private:
 
-    static table* instance;
-    std::vector < std::vector <cell*> > t;
+    static Table* instance;
+    std::vector < std::vector <Cell*> > t;
     std::vector <int> column_width;
     size_t numberOfColumns;
 
     public:
     
-    table();
-    ~table();
+    Table();
+    ~Table();
     bool load(std::istream &is);
     void calc_width();
     void print();
     void save_to_file(std::ostream &os);
     bool edit(int x, int y, std::string curr);
     void free();
-    static table* get_instance();
-    std::optional<double> get_cell_value(int x, int y) const;
+    static Table* get_instance();
+    std::optional<double> get_Cell_value(int x, int y) const;
 };
 
 

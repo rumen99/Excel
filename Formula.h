@@ -1,5 +1,5 @@
-#ifndef __FORMULA_HPP
-#define __FORMULA_HPP
+#ifndef __Formula_HPP
+#define __Formula_HPP
 
 # include "Cell.h"
 # include <string>
@@ -8,9 +8,9 @@
 # include <stack>
 # include <optional>
 # include <cmath>
-# include "table.h"
+# include "Table.h"
 # include "AdditionalFunctions.h"
-class formula : public cell
+class Formula : public Cell
 {
     private:
     std::string equation;
@@ -18,7 +18,7 @@ class formula : public cell
     bool isCalculated;
     bool isNowCalculating;
     public:
-    formula(std::string eq);
+    Formula(std::string eq);
     std::optional<double> get_value();
     int get_size();
     void print(int sz);

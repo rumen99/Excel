@@ -1,28 +1,28 @@
 # include "EmptyCell.h"
 
-std::optional<double> emptyCell::get_value()
+std::optional<double> EmptyCell::get_value()
 {
     return (double)0;
 }
 
-int emptyCell::get_size()
+int EmptyCell::get_size()
 {
     return 0;
 }
 
-void emptyCell::print(int sz)
+void EmptyCell::print(int sz)
 {
     for(int i = 1; i <= sz; ++i)
         std::cout << " ";
     return ;
 }
 
-void emptyCell::print_to_file(std::ostream &os)
+void EmptyCell::print_to_file(std::ostream &os)
 {
     return ;
 }
 
-void emptyCell::reset_for_caluclation()
+void EmptyCell::reset_for_caluclation()
 {
     return ;
 }

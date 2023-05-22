@@ -1,6 +1,6 @@
 # include "CommandLine.h"
 
-void commandLine::open()
+void CommandLine::open()
 {
     path = cmd[1];
     if(path[0] == '"')
@@ -15,7 +15,7 @@ void commandLine::open()
         return ;
     }
 
-     if(table::get_instance()->load(input_file))
+     if(Table::get_instance()->load(input_file))
      {
         std::cout << "Successfully opened " + path << std::endl;
         loadedFile = true;
@@ -30,7 +30,7 @@ void commandLine::open()
     input_file.close();
 }
 
-void commandLine::close()
+void CommandLine::close()
 {
     if(changes)
     {
@@ -41,7 +41,7 @@ void commandLine::close()
         if(answer == 'y' || answer == 'Y') save();
     }
     
-    table::get_instance()->free();
+    Table::get_instance()->free();
 
     changes = false;
     loadedFile = false;
@@ -52,7 +52,7 @@ void commandLine::close()
     return ;
 }
 
-void commandLine::save()
+void CommandLine::save()
 {
     std :: ofstream output_file(path);
 
@@ -62,7 +62,7 @@ void commandLine::save()
         return ;
     }
 
-    table::get_instance()->save_to_file(output_file);
+    Table::get_instance()->save_to_file(output_file);
 
     output_file.close();
     changes = false;
@@ -71,7 +71,7 @@ void commandLine::save()
     return ;
 }
 
-void commandLine::saveas()
+void CommandLine::saveas()
 {
     if(cmd[1][0] == '"')
     {
@@ -85,7 +85,7 @@ void commandLine::saveas()
         return ;
     }
 
-    table::get_instance()->save_to_file(output_file);
+    Table::get_instance()->save_to_file(output_file);
 
     output_file.close();
     changes = false;
@@ -94,7 +94,7 @@ void commandLine::saveas()
     return ;    
 }
 
-void commandLine::help()
+void CommandLine::help()
 {
     std::cout << "The following commands are supported:" << std::endl;
     std::cout << "\topen <file>                    opens <file>" << std::endl;
@@ -103,29 +103,29 @@ void commandLine::help()
     std::cout << "\tsaveas <file>                  saves the currently open file in <file>" << std::endl;
     std::cout << "\thelp                           prints this information" << std::endl;
     std::cout << "\texit                           exists the program" << std::endl;
-    std::cout << "\tprint                          prints the table to the screen" << std::endl;
+    std::cout << "\tprint                          prints the Table to the screen" << std::endl;
     std::cout << "\tedit  R<R>C<C> <value>          changes the value at row <R> and column <C> to <value>" << std::endl;
     return;
 }
 
-void commandLine::exit()
+void CommandLine::exit()
 {
     programTerminated = true;
 
-    table::get_instance()->free();
+    Table::get_instance()->free();
 
     std :: cout << "Exiting program...\n";
     return ;
 }
 
-void commandLine::print()
+void CommandLine::print()
 {
-    table::get_instance()->print();
+    Table::get_instance()->print();
 
     return ;
 }
 
-void commandLine::edit()
+void CommandLine::edit()
 {
     int x = 0, y = 0;
     int i;
@@ -162,7 +162,7 @@ void commandLine::edit()
     }
 
  
-    if(table::get_instance()->edit(x,y,cmd[2]))
+    if(Table::get_instance()->edit(x,y,cmd[2]))
     {
         std :: cout << "SUccessfully edit the cell.\n";
         changes = true;

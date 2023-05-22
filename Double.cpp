@@ -1,21 +1,21 @@
 # include "Double.h"
 
-doubleNumber::doubleNumber(std::string s)
+DoubleNumber::DoubleNumber(std::string s)
 {
     value = s;
 }
 
-doubleNumber::~doubleNumber()
+DoubleNumber::~DoubleNumber()
 {
 
 }
 
-void doubleNumber::reset_for_caluclation()
+void DoubleNumber::reset_for_caluclation()
 {
 
 }
 
-std::optional<double> doubleNumber::get_value()
+std::optional<double> DoubleNumber::get_value()
 {
     double ans = 0;
     bool point = 0;
@@ -32,12 +32,12 @@ std::optional<double> doubleNumber::get_value()
     return ans;
 }
 
-int doubleNumber::get_size()
+int DoubleNumber::get_size()
 {
     return value.size();
 }
 
-void doubleNumber::print(int sz)
+void DoubleNumber::print(int sz)
 {
     for(int i = 1; i <= sz-value.size(); i++)
     {
@@ -48,7 +48,7 @@ void doubleNumber::print(int sz)
     return ;
 }
 
-void doubleNumber::print_to_file(std::ostream &os)
+void DoubleNumber::print_to_file(std::ostream &os)
 {
     os << value;
     return ;

@@ -1,23 +1,23 @@
 # include "Table.h"
 
-table* table::instance = nullptr;
+Table* Table::instance = nullptr;
 
-table* table::get_instance()
+Table* Table::get_instance()
 {
-    if(instance == nullptr) instance = new table();
+    if(instance == nullptr) instance = new Table();
     return instance;
 }
 
-table::table()
+Table::Table()
 {
     numberOfColumns = 0;
 }
 
 
-bool table::load(std::istream &is)
+bool Table::load(std::istream &is)
 {
-    cell* tmp;
-    std::vector <cell*> row;
+    Cell* tmp;
+    std::vector <Cell*> row;
     std::string curr;
     int roww = 0;
     int col = 0;
@@ -33,7 +33,7 @@ bool table::load(std::istream &is)
 
         if(curr.size() == 0)
         {
-            tmp = new emptyCell();
+            tmp = new EmptyCell();
         }
         
         else if(curr[0] == '\"')
@@ -43,22 +43,22 @@ bool table::load(std::istream &is)
 
         else if(isInt(curr))
         {
-            tmp = new integer(curr);
+            tmp = new Integer(curr);
         }
 
         else if(isDouble(curr))
         {
-            tmp = new doubleNumber(curr);
+            tmp = new DoubleNumber(curr);
         }
         
         else if(curr[0] == '=')
         {
             if(!isFormula(curr))
             {
-                std :: cout << "Error: row " << roww + 1 << ", col " << col + 1 << ", " << curr << " is invalid formula!!\n";
+                std :: cout << "Error: row " << roww + 1 << ", col " << col + 1 << ", " << curr << " is invalid Formula!!\n";
                 return false;
             }
-            tmp = new formula(curr);
+            tmp = new Formula(curr);
         }
 
         else 
@@ -88,7 +88,7 @@ bool table::load(std::istream &is)
     return true;
 }
 
-void table::calc_width()
+void Table::calc_width()
 {
     for(int i = 0; i < t.size(); ++i)
     {
@@ -113,10 +113,10 @@ void table::calc_width()
     }
 }
 
-void table::print()
+void Table::print()
 {
     calc_width();
-    cell* empty = new emptyCell();
+    Cell* empty = new EmptyCell();
 
     for(int i = 0; i < t.size(); ++i)
     {
@@ -134,7 +134,7 @@ void table::print()
     }
 }
 
-void table::save_to_file(std::ostream &os)
+void Table::save_to_file(std::ostream &os)
 {
     for(int i = 0; i < t.size(); ++i)
     {
@@ -148,7 +148,7 @@ void table::save_to_file(std::ostream &os)
     }
 }
 
-table::~table()
+Table::~Table()
 {
     for(int i = 0; i < t.size(); ++i)
     {
@@ -160,14 +160,14 @@ table::~table()
     t.clear();
 }
 
-void table::free()
+void Table::free()
 {
     column_width.clear();
     numberOfColumns = 0;
     instance = nullptr;
 }
 
-std::optional<double> table::get_cell_value(int x, int y) const
+std::optional<double> Table::get_Cell_value(int x, int y) const
 {
     x--;
     y--;
@@ -176,16 +176,16 @@ std::optional<double> table::get_cell_value(int x, int y) const
     return t[x][y]->get_value();
 }
 
-bool table::edit(int x, int y, std::string curr)
+bool Table::edit(int x, int y, std::string curr)
 {
     x--;
     y--;
-    cell *tmp;
+    Cell *tmp;
     
     curr = compressSpaces(curr);
     if(curr.size() == 0)
     {
-        tmp = new emptyCell();
+        tmp = new EmptyCell();
     }
     
     else if(curr[0] == '\"')
@@ -195,12 +195,12 @@ bool table::edit(int x, int y, std::string curr)
 
     else if(isInt(curr))
     {
-        tmp = new integer(curr);
+        tmp = new Integer(curr);
     }
 
     else if(isDouble(curr))
     {
-        tmp = new doubleNumber(curr);
+        tmp = new DoubleNumber(curr);
     }
     else if(curr[0] == '=')
     {
@@ -208,7 +208,7 @@ bool table::edit(int x, int y, std::string curr)
         {
             return false;
         }
-        tmp = new formula(curr);
+        tmp = new Formula(curr);
     }
 
     else 
@@ -219,7 +219,7 @@ bool table::edit(int x, int y, std::string curr)
 
     if(x >= t.size())
     {
-        std::vector <cell*> row;
+        std::vector <Cell*> row;
         while(t.size() <= x)
             t.push_back(row);
     }
@@ -229,8 +229,8 @@ bool table::edit(int x, int y, std::string curr)
         
         while(t[x].size() <= y)
         {
-            cell* emptycell = new emptyCell();
-            t[x].push_back(emptycell);
+            Cell* emptyCell = new EmptyCell();
+            t[x].push_back(emptyCell);
         }
             
     }

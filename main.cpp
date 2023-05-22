@@ -2,6 +2,6 @@
 
 int main()
 {
-    commandLine* line = new commandLine;
+    CommandLine* line = new CommandLine;
     line -> run();
 }

@@ -1,6 +1,6 @@
 # include "Int.h"
 
-integer::integer(std::string s)
+Integer::Integer(std::string s)
 {
     int answer = 0;
     for(int i  =0; i < s.size(); ++i)
@@ -10,12 +10,12 @@ integer::integer(std::string s)
     value = answer;
 }
 
-std::optional<double> integer::get_value()
+std::optional<double> Integer::get_value()
 {
     return (double)value;
 }
 
-int integer::get_size()
+int Integer::get_size()
 {
     int sz = 0;
     int tmp = value;
@@ -28,7 +28,7 @@ int integer::get_size()
     return sz;
 }
 
-void integer::print(int sz)
+void Integer::print(int sz)
 {
     int k = get_size();
     for(int i = 1; i <= sz-k; ++i)
@@ -37,13 +37,13 @@ void integer::print(int sz)
     return ;
 }
 
-void integer::print_to_file(std::ostream &os)
+void Integer::print_to_file(std::ostream &os)
 {
     os << value;
     return ;
 }
 
-void integer::reset_for_caluclation()
+void Integer::reset_for_caluclation()
 {
     return ;
 }

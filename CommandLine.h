@@ -5,7 +5,7 @@
 # include <fstream>
 # include <iostream>
 # include "Table.h"
-class commandLine
+class CommandLine
 {
     private:
 
@@ -17,7 +17,7 @@ class commandLine
 
     public:
 
-    commandLine();
+    CommandLine();
     void run();
     void parse(std::string command);
     void execute();

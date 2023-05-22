@@ -4,12 +4,12 @@
 # include <iostream>
 # include <optional>
 
-class integer : public cell
+class Integer : public Cell
 {
     private:
     int value;
     public:
-    integer(std::string s);
+    Integer(std::string s);
     std::optional<double> get_value();
     int get_size();
     void print(int sz);

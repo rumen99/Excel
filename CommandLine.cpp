@@ -1,6 +1,6 @@
 # include "CommandLine.h"
 
-commandLine::commandLine()
+CommandLine::CommandLine()
 {
     cmd.clear();
     loadedFile = false;
@@ -8,7 +8,7 @@ commandLine::commandLine()
     changes = false; 
 }
 
-void commandLine::run()
+void CommandLine::run()
 {
     while(!programTerminated)
     {
@@ -25,7 +25,7 @@ void commandLine::run()
     return ;
 }
 
-void commandLine::parse(std::string command)
+void CommandLine::parse(std::string command)
 {
     std::string tmp = "";
     bool quotes = false;
@@ -71,7 +71,7 @@ void commandLine::parse(std::string command)
         cmd.push_back(tmp);
 }
 
-void commandLine::execute()
+void CommandLine::execute()
 {
     if(cmd.size() == 0)
     {

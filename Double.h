@@ -5,13 +5,13 @@
 # include <iostream>
 # include <optional>
 
-class doubleNumber : public cell
+class DoubleNumber : public Cell
 {
     private:
     std::string value;
     public:
-    doubleNumber(std::string s);
-    ~doubleNumber();
+    DoubleNumber(std::string s);
+    ~DoubleNumber();
     std::optional<double> get_value();
     int get_size();
     void print(int sz);

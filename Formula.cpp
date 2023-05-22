@@ -1,20 +1,20 @@
 # include "Formula.h"
 
-formula::formula(std::string eq)
+Formula::Formula(std::string eq)
 {
     equation = eq;
     isCalculated = false;
     isNowCalculating = false;
 }
 
-void formula::reset_for_caluclation()
+void Formula::reset_for_caluclation()
 {
     isCalculated = false;
     isNowCalculating = false;
 }
 
 
-std::optional<double> formula::get_value()
+std::optional<double> Formula::get_value()
 {
     if(isCalculated)
     {
@@ -60,7 +60,7 @@ std::optional<double> formula::get_value()
                 y = y*10 + (equation[i] - '0');
             }
 
-            std::optional<double> val = table::get_instance()->get_cell_value(x,y);
+            std::optional<double> val = Table::get_instance()->get_Cell_value(x,y);
             i--;
 
             if(val == std::nullopt)
@@ -124,7 +124,7 @@ std::optional<double> formula::get_value()
     return value;
 }
 
-int formula::get_size()
+int Formula::get_size()
 {
 
     std::optional res = get_value();
@@ -133,7 +133,7 @@ int formula::get_size()
     return 5;
 }
 
-void formula::print(int sz)
+void Formula::print(int sz)
 {
     std::optional res = get_value();
 
@@ -153,7 +153,7 @@ void formula::print(int sz)
     }
 }
 
-void formula::print_to_file(std::ostream &os)
+void Formula::print_to_file(std::ostream &os)
 {
     os << equation;
     return ;

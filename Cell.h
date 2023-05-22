@@ -4,7 +4,7 @@
 # include <fstream>
 # include <iostream>
 # include <optional>
-class cell
+class Cell
 {
     public:
 

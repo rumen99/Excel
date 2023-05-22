@@ -1,10 +1,10 @@
-#ifndef __EMPTYCELL_HPP
-#define __EMPTYCELL_HPP
+#ifndef __EmptyCell_HPP
+#define __EmptyCell_HPP
 # include "Cell.h"
 # include <string>
 # include <iostream>
 # include <optional>
-class emptyCell : public cell
+class EmptyCell : public Cell
 {
     private:
     public:

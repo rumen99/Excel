@@ -5,7 +5,7 @@
 # include <iostream>
 # include <optional>
 
-class String : public cell
+class String : public Cell
 {
     private:
     std::string value;
