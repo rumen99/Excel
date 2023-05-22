@@ -10,7 +10,7 @@ class EmptyCell : public Cell
     public:
     std::optional<double> get_value();
     int get_size();
-    void print(int sz);
+    void print(int sizeCell);
     void print_to_file(std::ostream &os);
     void reset_for_caluclation();
 };

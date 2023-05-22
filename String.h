@@ -10,10 +10,10 @@ class String : public Cell
     private:
     std::string value;
     public:
-    String(std::string s);
+    String(std::string _value);
     std::optional<double> get_value();
     int get_size();
-    void print(int sz);
+    void print(int sizeCell);
     void print_to_file(std::ostream &os);
     void reset_for_caluclation();
 };

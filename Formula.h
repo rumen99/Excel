@@ -18,10 +18,10 @@ class Formula : public Cell
     bool isCalculated;
     bool isNowCalculating;
     public:
-    Formula(std::string eq);
+    Formula(std::string _equation);
     std::optional<double> get_value();
     int get_size();
-    void print(int sz);
+    void print(int sizeCell);
     void print_to_file(std::ostream &os);
     void reset_for_caluclation();
 };

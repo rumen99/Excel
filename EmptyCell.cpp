@@ -10,9 +10,9 @@ int EmptyCell::get_size()
     return 0;
 }
 
-void EmptyCell::print(int sz)
+void EmptyCell::print(int sizeCell)
 {
-    for(int i = 1; i <= sz; ++i)
+    for(int i = 1; i <= sizeCell; ++i)
         std::cout << " ";
     return ;
 }

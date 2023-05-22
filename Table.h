@@ -18,10 +18,11 @@ class Table
     std::vector < std::vector <Cell*> > t;
     std::vector <int> column_width;
     size_t numberOfColumns;
-
+    Table();
+    
     public:
     
-    Table();
+
     ~Table();
     bool load(std::istream &is);
     void calc_width();

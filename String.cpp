@@ -1,40 +1,44 @@
-# include "String.h"
+#include "String.h"
 
-String::String(std::string s)
+String::String(std::string _value)
 {
-    for(int i = 1; i < s.size()-1; ++i)
+    for (int i = 1; i < _value.size() - 1; ++i)
     {
-        if(s[i]!='\\' || s[i-1] == '\\') value+=s[i];
+        if (_value[i] != '\\' || _value[i - 1] == '\\')
+            value += _value[i];
     }
 }
 
 std::optional<double> String::get_value()
 {
     double answer = 0;
-    double d = 1;
+    double unit = 1;
     bool point = false;
 
-    for(int i = 0; i < value.size(); i++)
+    for (int i = 0; i < value.size(); i++)
     {
-        if(i == 0 && (value[i] == '+' || value[i] == '-') ) continue;
-        if(!point && value[i] == '.')
+        if (i == 0 && (value[i] == '+' || value[i] == '-'))
+            continue;
+        if (!point && value[i] == '.')
         {
             point = true;
-            d /= 10.0;
+            unit /= 10.0;
             continue;
         }
-        else if(value[i] >= '0' && value[i] <= '9')
+        else if (value[i] >= '0' && value[i] <= '9')
         {
-            answer = answer*(point ? 1 : 10) + d*(value[i]-'0');
-            if(point) d /= 10.0;
+            answer = answer * (point ? 1 : 10) + unit * (value[i] - '0');
+            if (point)
+                unit /= 10.0;
         }
         else
         {
             return 0.0;
         }
-
     }
 
+    if (value[0] == '-')
+        answer *= -1;
     return answer;
 }
 
@@ -43,30 +47,29 @@ int String::get_size()
     return value.size();
 }
 
-void String::print(int sz)
+void String::print(int sizeCell)
 {
-    std :: cout << value;
-    for(int i = 0; i < sz-get_size();++i)
-        std :: cout << " ";
-
+    std ::cout << value;
+    for (int i = 0; i < sizeCell - get_size(); ++i)
+        std ::cout << " ";
 }
 
 void String::reset_for_caluclation()
 {
-    return ;
+    return;
 }
 
 void String::print_to_file(std::ostream &os)
 {
     os << '"';
-    for(int i = 0; i < value.size(); ++i)
+    for (int i = 0; i < value.size(); ++i)
     {
-        if(value[i] == '"' || value[i] == '\\')
+        if (value[i] == '"' || value[i] == '\\')
         {
-            os << "\\"; 
+            os << "\\";
         }
         os << value[i];
     }
     os << '"';
-    return ;
+    return;
 }
