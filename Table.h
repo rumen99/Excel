@@ -30,6 +30,7 @@ class Table
     void save_to_file(std::ostream &os);
     bool edit(int x, int y, std::string curr);
     void free();
+    std::vector <int> get_column_width();
     static Table* get_instance();
     std::optional<double> get_Cell_value(int x, int y) const;
 };

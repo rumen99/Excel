@@ -1,5 +1,11 @@
 # include "CommandLine.h"
 
+void CommandLine::clear_command()
+{
+    cmd.clear();
+    path = "";
+}
+
 CommandLine::CommandLine()
 {
     cmd.clear();

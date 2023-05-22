@@ -36,9 +36,9 @@ void CommandLine::close()
     {
         std :: cout << "You have unsaved changes. Do you want to save them [y/N]\n";
         std :: cout << "> ";
-        char answer;
-        std :: cin >> answer;
-        if(answer == 'y' || answer == 'Y') save();
+        std::string answer;
+        getline(std::cin,answer);
+        if(answer[0] == 'y' || answer[0] == 'Y') save();
     }
     
     Table::get_instance()->free();

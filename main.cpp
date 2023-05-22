@@ -1,4 +1,20 @@
-//# include "CommandLine.h"
+//#define TESTMODE
+
+
+#ifndef TESTMODE
+
+# include "CommandLine.h"
+int main()
+{
+    CommandLine* line = new CommandLine;
+    line -> run();
+}
+
+
+#endif
+
+#ifdef TESTMODE
+
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
@@ -8,6 +24,10 @@
 # include "Int.h"
 # include "String.h"
 # include "Formula.h"
+# include "CommandLine.h"
+# include "Table.h"
+
+# include <vector>
 #include <string>
 TEST_CASE("Test EmptyCell") {
     EmptyCell* emptyCell = new EmptyCell();
@@ -103,12 +123,90 @@ TEST_CASE("Test Formula without references to other cells") {
     CHECK(formula5->get_size() == 5);
 }
 
-/*
-int main()
+void simulateCommand(CommandLine* commandLine, std::string const& command)
 {
-    CommandLine* line = new CommandLine;
-    line -> run();
+    commandLine->parse(command);
+    commandLine->execute();
+    commandLine->clear_command();
 }
-*/
+TEST_CASE("TEST SIMULATION OF OPENING CONSECUTIVE TABLES")
+{
+    CommandLine* commandLine = new CommandLine;
+    simulateCommand(commandLine,"open file.txt");
+    simulateCommand(commandLine,"print");
+
+    CHECK(Table::get_instance() -> get_Cell_value(1,1) == 10);
+    CHECK(Table::get_instance() -> get_Cell_value(1,2) == 0);
+    CHECK(Table::get_instance() -> get_Cell_value(1,3) == 123.56);
+    CHECK(Table::get_instance() -> get_Cell_value(1,4) == 0);
+    CHECK(Table::get_instance() -> get_Cell_value(2,1) == 0);
+    CHECK(Table::get_instance() -> get_Cell_value(2,2) == 17);
+    CHECK(Table::get_instance() -> get_Cell_value(3,2) == 2);
+    CHECK(Table::get_instance() -> get_Cell_value(3,3) == 3);
+
+    simulateCommand(commandLine,"edit R1C1 \"Hello\"");
+    simulateCommand(commandLine,"print");
+
+    CHECK(Table::get_instance() -> get_Cell_value(1,1) == 0);
+
+    simulateCommand(commandLine,"saveas \"file-copy.txt\"");
+    simulateCommand(commandLine,"close");
+    simulateCommand(commandLine,"unknown kommand");
+    simulateCommand(commandLine,"open file1.txt");
+    simulateCommand(commandLine,"close");
+    simulateCommand(commandLine,"open file.txt 56789");
+    simulateCommand(commandLine,"open file-copy.txt");
+    simulateCommand(commandLine,"print");
+    CHECK(Table::get_instance() -> get_Cell_value(1,1) == 0);
+
+    simulateCommand(commandLine,"close");   
+    simulateCommand(commandLine,"open \"file1.txt\"");
+
+    CHECK(Table::get_instance() -> get_Cell_value(1,1) == 10);
+    CHECK(Table::get_instance() -> get_Cell_value(3,3) == 0);
+
+    simulateCommand(commandLine,"close");
+    
+    std::vector<int> widths = Table::get_instance() -> get_column_width();
+    CHECK(widths.size() == 0);
+
+    simulateCommand(commandLine,"open file.txt");
+    widths = Table::get_instance() -> get_column_width();
+    CHECK(widths.size() == 4);
+    std::vector<int> realWidths = {9, 12, 6, 1};
+    for(int i = 0; i < 4; ++i)
+        CHECK(widths[i] == realWidths[i]);
+
+    simulateCommand(commandLine,"exit");
+
+}
+
+TEST_CASE("Tables with formulas")
+{
+    CommandLine* commandLine = new CommandLine;
+    simulateCommand(commandLine,"open file5.txt");
+    simulateCommand(commandLine,"print");
+
+    CHECK(Table::get_instance() -> get_Cell_value(1,2) == 0);
+    CHECK(Table::get_instance() -> get_Cell_value(1,3) == 5);
+    CHECK(Table::get_instance() -> get_Cell_value(1,4) == 0);
+    CHECK(Table::get_instance() -> get_Cell_value(1,7) == 8);
+    CHECK(Table::get_instance() -> get_Cell_value(3,1) == 1230);
+    CHECK(Table::get_instance() -> get_Cell_value(6,1) == std::nullopt);
+    CHECK(Table::get_instance() -> get_Cell_value(7,1) == std::nullopt);
+    CHECK(Table::get_instance() -> get_Cell_value(8,1) == std::nullopt);
+    CHECK(Table::get_instance() -> get_Cell_value(9,1) == std::nullopt);
+    CHECK(Table::get_instance() -> get_Cell_value(10,1) == std::nullopt);
+
+    simulateCommand(commandLine,"edit R1C2 5");
+    simulateCommand(commandLine,"print");
+    CHECK(Table::get_instance() -> get_Cell_value(6,1) == 2);
+
+    simulateCommand(commandLine,"exit");
+}
+
+#endif
+
+
 
 

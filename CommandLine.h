@@ -30,4 +30,5 @@ class CommandLine
     void exit();
     void print();
     void edit();
+    void clear_command();
 };

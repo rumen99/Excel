@@ -8,6 +8,12 @@ Table* Table::get_instance()
     return instance;
 }
 
+std::vector <int> Table::get_column_width()
+{
+    calc_width();
+    return column_width;
+}
+
 Table::Table()
 {
     numberOfColumns = 0;
