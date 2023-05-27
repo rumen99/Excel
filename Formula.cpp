@@ -115,7 +115,6 @@ std::optional<double> Formula::get_value()
         result += " ";
         operations.pop();
     }
-
     value = RPN(result);
     isCalculated = true;
     isNowCalculating = false;

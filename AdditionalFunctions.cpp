@@ -89,8 +89,10 @@ std::optional<double> RPN(std::string expression)
         }
         else
         {
+            if(numbers.empty()) return std::nullopt;
             rhs = numbers.top();
             numbers.pop();
+            if(numbers.empty()) return std::nullopt;
             lhs = numbers.top();
             numbers.pop();
             result = perform_operation(lhs, expression[idx++], rhs);
@@ -99,8 +101,45 @@ std::optional<double> RPN(std::string expression)
         }
         idx++;
     }
+    if(numbers.empty()) return std::nullopt;
     result = numbers.top();
+    if(numbers.size()!=1) return std::nullopt;
     return result;
+}
+
+bool isRPN(std::string expression)
+{
+    double tmp, lhs, rhs;
+    std::optional<double> result = 0;
+    std::stack<double> numbers;
+    int idx = 0;
+
+    while(idx < expression.size())
+    {
+        while (expression[idx] == ' ')idx++;
+        if (expression[idx] >= '0' && expression[idx] <= '9')
+        {
+            tmp = get_number(expression, idx);
+            numbers.push(tmp);
+        }
+        else
+        {
+            if(numbers.empty()) return false;
+            rhs = numbers.top();
+            numbers.pop();
+            if(numbers.empty()) return false;
+            lhs = numbers.top();
+            numbers.pop();
+            result = perform_operation(lhs, expression[idx++], rhs);
+            if (result == std::nullopt)return false;
+            else numbers.push(result.value());
+        }
+        idx++;
+    }
+    if(numbers.empty()) return false;
+    result = numbers.top();
+    if(numbers.size()!=1) return false;
+    return true;
 }
 
 std::string compressSpaces(std::string s)
@@ -144,68 +183,90 @@ bool isDouble(std::string s)
     return point;
 }
 
-bool isFormula(std::string s)
+bool isFormula(std::string equation)
 {
-    bool lastoperator = false;
-    int openBraces = 0;
-    for(int i = 1; i < s.size(); ++i)
-    {
-        if(s[i] == ' ') continue;
-        if(s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '^')
-        {
-            lastoperator = true;
-            continue;
-        }
-        if(s[i] == '(')
-        {
-            openBraces++;
-            continue;
-        }
-        if(s[i] == ')')
-        {
-            openBraces--;
-            if(openBraces < 0) return false;
-            continue;
-        }
-        if(s[i] == 'R')
-        {
-            if(i > 3 && (!lastoperator)) return false;
-            lastoperator = false;
-            bool fl = true;
-            i++;
-            while(i < s.size() && s[i] != 'C')
-            {
-                if(s[i] < '0' || s[i] > '9') return false;
-                i++;
-            }
-            if(i == s.size()) return false;
-            i++;
-            while(i < s.size() && s[i] >= '0' && s[i] <= '9')i++;
-            i--;
-            continue;
-        }
-        if(s[i] >= '0' && s[i] <= '9')
-        {
-            if(i > 3 && (!lastoperator)) return false;
-            lastoperator = false;
-            bool point = false;
-            while(i < s.size())
-            {
-                if(s[i] >= '0' && s[i] <= '9') {i++;continue;}
-                if(s[i] == '.')
-                {
-                    if(point) return false;
-                    point = true;
-                    i++;
-                    continue;
-                }
-                break;
-            }
-            i--;
-            continue;
-        }
-        return false;
+    std::vector<double> vals;
+    std::stack<char> operations;
+    double tmp, unit;
+    bool point;
+    int last_operation = 0;
+    std::string result = "";
+    operations.push('(');
 
+    for (int i = 1; i < equation.size(); ++i)
+    {
+        if (equation[i] == ' ')
+            continue;
+
+        if (equation[i] >= '0' && equation[i] <= '9')
+        {
+            tmp = get_number(equation, i);
+            i--;
+            result += std::to_string(tmp);
+            result += " ";
+        }
+        else if (equation[i] == 'R')
+        {
+            int x = 0, y = 0;
+            for (++i; i < equation.size() && equation[i] != 'C'; ++i)
+            {
+                x = x * 10 + (equation[i] - '0');
+            }
+
+            for (++i; (i < equation.size()) && (equation[i] >= '0' && equation[i] <= '9'); ++i)
+            {
+                y = y * 10 + (equation[i] - '0');
+            }
+
+            std::optional<double> val = 1;
+            i--;
+
+
+            result += std::to_string(val.value());
+            result += " ";
+        }
+
+        else if (is_operator(equation[i]))
+        {
+            if (result.size() == last_operation)
+            {
+                result += "0 ";
+            }
+
+            last_operation = result.size();
+
+            while (operations.top() != '(' && priority(operations.top()) >= priority(equation[i]))
+            {
+                result += operations.top();
+                result += " ";
+                operations.pop();
+            }
+
+            operations.push(equation[i]);
+        }
+
+        else if (equation[i] == '(')
+        {
+            operations.push(equation[i]);
+        }
+
+        else if (equation[i] == ')')
+        {
+            while (operations.top() != '(')
+            {
+                result += operations.top();
+                result += " ";
+                operations.pop();
+            }
+            operations.pop();
+        }
     }
-    return openBraces == 0;
+    while (operations.top() != '(')
+    {
+        result += operations.top();
+        result += " ";
+        operations.pop();
+    }
+    return isRPN(result);
+
 }
