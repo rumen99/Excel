@@ -132,7 +132,7 @@ void simulateCommand(CommandLine* commandLine, std::string const& command)
 TEST_CASE("TEST SIMULATION OF OPENING CONSECUTIVE TABLES")
 {
     CommandLine* commandLine = new CommandLine;
-    simulateCommand(commandLine,"open file.txt");
+    simulateCommand(commandLine,"open examples/file.txt");
     simulateCommand(commandLine,"print");
 
     CHECK(Table::get_instance() -> get_Cell_value(1,1) == 10);
@@ -149,18 +149,18 @@ TEST_CASE("TEST SIMULATION OF OPENING CONSECUTIVE TABLES")
 
     CHECK(Table::get_instance() -> get_Cell_value(1,1) == 0);
 
-    simulateCommand(commandLine,"saveas \"file-copy.txt\"");
+    simulateCommand(commandLine,"saveas \"examples/file-copy.txt\"");
     simulateCommand(commandLine,"close");
     simulateCommand(commandLine,"unknown kommand");
-    simulateCommand(commandLine,"open file1.txt");
+    simulateCommand(commandLine,"open examples/file1.txt");
     simulateCommand(commandLine,"close");
-    simulateCommand(commandLine,"open file.txt 56789");
-    simulateCommand(commandLine,"open file-copy.txt");
+    simulateCommand(commandLine,"open examples/file.txt 56789");
+    simulateCommand(commandLine,"open examples/file-copy.txt");
     simulateCommand(commandLine,"print");
     CHECK(Table::get_instance() -> get_Cell_value(1,1) == 0);
 
     simulateCommand(commandLine,"close");   
-    simulateCommand(commandLine,"open \"file1.txt\"");
+    simulateCommand(commandLine,"open \"examples/file1.txt\"");
 
     CHECK(Table::get_instance() -> get_Cell_value(1,1) == 10);
     CHECK(Table::get_instance() -> get_Cell_value(3,3) == 0);
@@ -170,7 +170,7 @@ TEST_CASE("TEST SIMULATION OF OPENING CONSECUTIVE TABLES")
     std::vector<int> widths = Table::get_instance() -> get_column_width();
     CHECK(widths.size() == 0);
 
-    simulateCommand(commandLine,"open file.txt");
+    simulateCommand(commandLine,"open examples/file.txt");
     widths = Table::get_instance() -> get_column_width();
     CHECK(widths.size() == 4);
     std::vector<int> realWidths = {9, 12, 6, 1};
@@ -184,7 +184,7 @@ TEST_CASE("TEST SIMULATION OF OPENING CONSECUTIVE TABLES")
 TEST_CASE("Tables with formulas")
 {
     CommandLine* commandLine = new CommandLine;
-    simulateCommand(commandLine,"open file5.txt");
+    simulateCommand(commandLine,"open examples/file5.txt");
     simulateCommand(commandLine,"print");
 
     CHECK(Table::get_instance() -> get_Cell_value(1,2) == 0);
