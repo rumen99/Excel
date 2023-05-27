@@ -84,7 +84,7 @@ bool Table::load(std::istream &is)
         else
         {
             if((is.peek() != EOF)) is.get();
-            t.push_back(row);
+            table.push_back(row);
             col = 0;
             roww++;
             row.clear();
@@ -96,25 +96,25 @@ bool Table::load(std::istream &is)
 
 void Table::calc_width()
 {
-    for(int i = 0; i < t.size(); ++i)
+    for(int i = 0; i < table.size(); ++i)
     {
-        for(int j = 0; j < t[i].size(); ++j)
+        for(int j = 0; j < table[i].size(); ++j)
         {
-            t[i][j] -> reset_for_caluclation();
+            table[i][j] -> reset_for_caluclation();
         }
     }
 
     column_width.clear();
 
-    for(int i = 0; i < t.size(); ++i)
+    for(int i = 0; i < table.size(); ++i)
     {
-        numberOfColumns = std::max(numberOfColumns, (size_t)t[i].size());
+        numberOfColumns = std::max(numberOfColumns, (size_t)table[i].size());
 
-        for(int j = 0; j < t[i].size(); ++j)
+        for(int j = 0; j < table[i].size(); ++j)
         {
-            if(column_width.size()==j)column_width.push_back(t[i][j]->get_size());
+            if(column_width.size()==j)column_width.push_back(table[i][j]->get_size());
             else
-                column_width[j] = std::max(column_width[j], t[i][j]->get_size());
+                column_width[j] = std::max(column_width[j], table[i][j]->get_size());
         }
     }
 }
@@ -124,14 +124,14 @@ void Table::print()
     calc_width();
     Cell* empty = new EmptyCell();
 
-    for(int i = 0; i < t.size(); ++i)
+    for(int i = 0; i < table.size(); ++i)
     {
-        for(int j = 0; j < t[i].size(); ++j)
+        for(int j = 0; j < table[i].size(); ++j)
         {
-            t[i][j]->print(column_width[j]);
+            table[i][j]->print(column_width[j]);
             std::cout << " | ";
         }
-        for(int j = t[i].size(); j < numberOfColumns; ++j)
+        for(int j = table[i].size(); j < numberOfColumns; ++j)
         {
             empty->print(column_width[j]);
             std::cout << " | ";
@@ -140,14 +140,14 @@ void Table::print()
     }
 }
 
-void Table::save_to_file(std::ostream &os)
+void Table::save_to_file(std::ostream &os) const
 {
-    for(int i = 0; i < t.size(); ++i)
+    for(int i = 0; i < table.size(); ++i)
     {
-        for(int j = 0; j < t[i].size(); ++j)
+        for(int j = 0; j < table[i].size(); ++j)
         {
-            t[i][j] -> print_to_file(os);
-            if(j + 1 < t[i].size())
+            table[i][j] -> print_to_file(os);
+            if(j + 1 < table[i].size())
                 os << ", "; 
         }
         os << '\n';
@@ -156,14 +156,14 @@ void Table::save_to_file(std::ostream &os)
 
 Table::~Table()
 {
-    for(int i = 0; i < t.size(); ++i)
+    for(int i = 0; i < table.size(); ++i)
     {
-        for(int j = 0; j < t[i].size(); ++j)
+        for(int j = 0; j < table[i].size(); ++j)
         {
-            delete t[i][j];
+            delete table[i][j];
         }
     }
-    t.clear();
+    table.clear();
 }
 
 void Table::free()
@@ -177,9 +177,9 @@ std::optional<double> Table::get_Cell_value(int x, int y) const
 {
     x--;
     y--;
-    if(x>=t.size()) return 0;
-    if(y>=t[x].size()) return 0;
-    return t[x][y]->get_value();
+    if(x>=table.size()) return 0;
+    if(y>=table[x].size()) return 0;
+    return table[x][y]->get_value();
 }
 
 bool Table::edit(int x, int y, std::string curr)
@@ -223,26 +223,26 @@ bool Table::edit(int x, int y, std::string curr)
     }
 
 
-    if(x >= t.size())
+    if(x >= table.size())
     {
         std::vector <Cell*> row;
-        while(t.size() <= x)
-            t.push_back(row);
+        while(table.size() <= x)
+            table.push_back(row);
     }
 
-    if(y >= t[x].size())
+    if(y >= table[x].size())
     {
         
-        while(t[x].size() <= y)
+        while(table[x].size() <= y)
         {
             Cell* emptyCell = new EmptyCell();
-            t[x].push_back(emptyCell);
+            table[x].push_back(emptyCell);
         }
             
     }
     
-    delete t[x][y];
-    t[x][y] = tmp;
+    delete table[x][y];
+    table[x][y] = tmp;
 
     calc_width();
     return true;

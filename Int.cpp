@@ -42,7 +42,7 @@ void Integer::print(int sizeCell)
     return;
 }
 
-void Integer::print_to_file(std::ostream &os)
+void Integer::print_to_file(std::ostream &os) const
 {
     os << value;
     return;

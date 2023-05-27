@@ -11,7 +11,7 @@ class EmptyCell : public Cell
     std::optional<double> get_value();
     int get_size();
     void print(int sizeCell);
-    void print_to_file(std::ostream &os);
+    void print_to_file(std::ostream &os)const;
     void reset_for_caluclation();
 };
 

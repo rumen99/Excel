@@ -59,7 +59,7 @@ void String::reset_for_caluclation()
     return;
 }
 
-void String::print_to_file(std::ostream &os)
+void String::print_to_file(std::ostream &os) const
 {
     os << '"';
     for (int i = 0; i < value.size(); ++i)

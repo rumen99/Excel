@@ -152,7 +152,7 @@ void Formula::print(int sizeCell)
     }
 }
 
-void Formula::print_to_file(std::ostream &os)
+void Formula::print_to_file(std::ostream &os) const
 {
     os << equation;
     return;

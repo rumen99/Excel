@@ -56,7 +56,7 @@ void DoubleNumber::print(int sizeCell)
     return;
 }
 
-void DoubleNumber::print_to_file(std::ostream &os)
+void DoubleNumber::print_to_file(std::ostream &os)const
 {
     os << value;
     return;

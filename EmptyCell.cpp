@@ -17,7 +17,7 @@ void EmptyCell::print(int sizeCell)
     return ;
 }
 
-void EmptyCell::print_to_file(std::ostream &os)
+void EmptyCell::print_to_file(std::ostream &os) const
 {
     return ;
 }
