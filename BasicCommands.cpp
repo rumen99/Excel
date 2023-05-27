@@ -164,7 +164,7 @@ void CommandLine::edit()
  
     if(Table::get_instance()->edit(x,y,cmd[2]))
     {
-        std :: cout << "SUccessfully edit the cell.\n";
+        std :: cout << "Successfully edit the cell.\n";
         changes = true;
         return ;
     }

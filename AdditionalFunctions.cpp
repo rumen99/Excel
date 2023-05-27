@@ -147,12 +147,24 @@ bool isDouble(std::string s)
 bool isFormula(std::string s)
 {
     bool lastoperator = false;
+    int openBraces = 0;
     for(int i = 1; i < s.size(); ++i)
     {
         if(s[i] == ' ') continue;
         if(s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '^')
         {
             lastoperator = true;
+            continue;
+        }
+        if(s[i] == '(')
+        {
+            openBraces++;
+            continue;
+        }
+        if(s[i] == ')')
+        {
+            openBraces--;
+            if(openBraces < 0) return false;
             continue;
         }
         if(s[i] == 'R')
@@ -192,7 +204,8 @@ bool isFormula(std::string s)
             i--;
             continue;
         }
+        return false;
 
     }
-    return true;
+    return openBraces == 0;
 }
